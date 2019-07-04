@@ -1,0 +1,74 @@
+{% extends "login/base.html" %}
+<link rel='stylesheet' href='https://vjs.zencdn.net/4.12/video-js.css'>
+{% block body %}
+
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://vjs.zencdn.net/4.12/video.js'></script>
+	
+	<br><hr>
+	
+		<h1>{{ details.video_title }}</h1>
+		<br>
+		<hr>
+		<video width="720" controls>
+  			<source src="{{details.videos.url}}" type="video/mp4">
+  			Your browser does not support HTML5 video.
+		</video>
+		<hr>
+
+		   <p style='color:purple;' class='creator'><b>{{details.user.username}}</b></p>
+		    <form method="POST">
+		      {% csrf_token %}
+
+		      <button class="btn btn-danger" tabindex="0" name='dislikeVideo' onclick="window.location='{% url 'dislike_video' details.id %}';">dislike</button>
+		    </form>
+
+		    <a class="ui basic purple left pointing label">
+		      {{details.dislikes}}
+		    </a>
+		  </div>
+
+		    <form method="POST">
+		      {% csrf_token %}
+
+		      <button class="btn btn-primary" tabindex="0" name='likeVideo' onclick="window.location='{% url 'like_video' details.id %}';">Like</button>
+
+		    </form>
+
+		    <a class="ui basic teal left pointing label">
+		      {{details.likes}}
+		    </a>
+
+		  </div>
+
+
+
+
+
+
+		<h4>likes : {{ details.likes }} ~~~~~~~~~~~~~~~  dislikes : {{details.dislikes}}</h4>
+		<br>
+		<h4>Published date : {{details.upload_date}}</h4>
+		<h4>published by : {{details.user}}</h4>
+		<br><br><hr>
+
+		<h2>Comments:</h2>
+		<form method="POST">
+			{% csrf_token %}
+			{{ form.as_p }}
+	
+			<button type="submit"> Submit </button>
+		</form>
+
+		{% for c in comments %}
+			<h3>{{c.user}} : </h3>
+			<p>{{c.comment}}</p>
+		{% endfor %}
+
+
+
+
+
+
+
+{% endblock %}
