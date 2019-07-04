@@ -1,0 +1,27 @@
+
+{% extends "login/base.html" %}
+{% load staticfiles %}
+{% block body %}
+	
+
+	<h1>WElcome to the Htube </h1>               
+	<hr> <a href="{% url 'upload' %}">upload video</a>   |   <a href="{% url 'logout' %}">logout</a><div id="right" style="float: right;">Currently Logged in :  {{user.username}}</div> 
+	<hr>
+	<br>
+
+	<a href="{% url 'logout' %}">logout</a>
+	{% for a in add %}
+		
+		<video width="400" controls>
+  			<source src="{{a.videos.url}}" type="video/mp4">
+  			Your browser does not support HTML5 video.
+		</video>
+
+		<a href="{% url 'video_details' a.pk %}"><h3>{{a.video_title}}</h3></a>
+
+		<h4>uploaded by : {{a.user}}</h4>
+
+	{% endfor %}
+
+
+{% endblock %}
